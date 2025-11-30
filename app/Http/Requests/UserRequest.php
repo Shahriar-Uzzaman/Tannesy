@@ -26,7 +26,23 @@ class UserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255', 'min:3'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'string', 'max:20', Password::min(8)->mixedCase()->numbers()->symbols()],
-            'passwordConfirm' => ['required', 'same:password']
+            'passwordConfirm' => ['required', 'same:password'],
+            'date_of_birth' => ['nullable','date'],
+            'phone_number' => ['nullable', 'integer'],
+            'role' => ['required', 'in:Customer,Seller,Admin']
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Name field cannot be empty!!',
+            'email.required' => 'Email field cannot be empty!!',
+            'email.email' => 'Please provide a valid email address!!',
+            'email.unique' => 'Email address already in use!!',
+            'password.required' => 'Password cannot be empty!!',
+            'password.Password' => 'Password must contain one capital letter(A-Z), one small letter(a-z), one number(0-9) and one symbol!!',
+            'role' => 'The selected role is invalid'
         ];
     }
 }
