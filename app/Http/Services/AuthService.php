@@ -42,32 +42,23 @@ class AuthService
 
     public function login(array $data)
     {
-        DB::beginTransaction();
-        try
-        {
             $user = $this->userRepo->getByEmail($data['email']);
-            if(!$user)
+            if(empty($user))
             {
                 throw new \Exception('Invalid credentials!!');
             }
 
             if(!Hash::check($data['password'], $user->password))
             {
-                throw new \Exception('Invalid credentials!!');
+                throw new \Exception('Invalid credentials pass!!');
             }
 
-            $user->token()->delete();
+            $user->tokens()->delete();
             $token = $user->createToken('token')->plainTextToken;
-            DB::commit();
             return [
                 'user' => $user,
                 'token' => $token
             ];
-        }
-        catch (\Exception$e)
-        {
-            DB::rollBack();
-            throw $e;
-        }
+
     }
 }
