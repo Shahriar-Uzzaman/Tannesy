@@ -12,6 +12,16 @@ class UserRepository
         return User::where('email', $email)->first();
     }
 
+    public function find($id)
+    {
+        return User::where('id', $id)->first();
+    }
+
+    public function getAllUser()
+    {
+        return User::all();
+    }
+
     public function store(array $data)
     {
         return User::create($data);

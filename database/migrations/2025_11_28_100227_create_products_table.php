@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('original_price',10,2);
             $table->decimal('current_price',10,2);
             $table->integer('quantity');
-            $table->foreignId('sub_category_id');
+            $table->foreignId('category_id');
             $table->foreignId('user_id');
             $table->timestamps();
         });

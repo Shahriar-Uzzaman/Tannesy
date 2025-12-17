@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmailVarificationRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Services\AuthService;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -17,11 +17,20 @@ class AuthController extends Controller
 
     public function register(UserRequest $request)
     {
-        return $this->authService->register($request->validated());
+        return $this->success(
+            $this->authService->register($request->validated()),
+            "User registered successfully!",
+            201,
+        );
     }
 
     public function login(LoginRequest $request)
     {
         return $this->authService->login($request->validated());
+    }
+
+    public function emailVarification(EmailVarificationRequest $request)
+    {
+        return $this->authService->verifyOtp($request->validated());
     }
 }
